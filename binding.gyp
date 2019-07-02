@@ -58,8 +58,8 @@
 				['target_arch == "arm" or target_arch == "arm64"',
 					{
 						# There's been problems getting real fibers working on arm
-						'defines': ['CORO_PTHREAD'],
-						'defines!': ['CORO_UCONTEXT', 'CORO_SJLJ', 'CORO_ASM'],
+						'defines!': ['CORO_PTHREAD'],
+						'defines': ['CORO_UCONTEXT', 'CORO_SJLJ', 'CORO_ASM'],
 					},
 				],
 			],
