@@ -494,10 +494,12 @@ coro_destroy (coro_context *ctx)
 {
   if (!pthread_equal (ctx->id, null_tid))
     {
-      pthread_cancel (ctx->id);
+      pthread_kill (ctx->id, 0);
+      /*
       pthread_mutex_unlock (&coro_mutex);
       pthread_join (ctx->id, 0);
       pthread_mutex_lock (&coro_mutex);
+      */
     }
 
   pthread_cond_destroy (&ctx->cv);
