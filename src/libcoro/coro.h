@@ -327,6 +327,9 @@ struct coro_context
   ucontext_t uc;
 };
 
+int swapcontext(ucontext_t *oucp, const ucontext_t *ucp);
+void makecontext(ucontext_t *uc, void (*fn)(void), int argc, ...);
+
 # define coro_transfer(p,n) swapcontext (&((p)->uc), &((n)->uc))
 # define coro_destroy(ctx) (void *)(ctx)
 
@@ -369,9 +372,6 @@ struct coro_context
 
 # define coro_transfer(p,n) do { if (!coro_setjmp ((p)->env)) coro_longjmp ((n)->env); } while (0)
 # define coro_destroy(ctx) (void *)(ctx)
-
-int swapcontext(ucontext_t *oucp, const ucontext_t *ucp);
-void makecontext(ucontext_t *uc, void (*fn)(void), int argc, ...);
 
 #elif CORO_ASM
 
