@@ -71,6 +71,29 @@
 
 # include <stdlib.h>
 
+void
+makecontext(ucontext_t *uc, void (*fn)(void), int argc, ...)
+{
+    int i, *sp;
+    va_list arg;
+
+    va_start(arg, argc);
+    sp = (int*)uc->uc_stack.ss_sp+uc->uc_stack.ss_size/4;
+    for(i=0; i<4 && i<argc; i++)
+        uc->uc_mcontext.mc_regs[i+4] = va_arg(arg, int);
+    va_end(arg);
+    uc->uc_mcontext.mc_regs[29] = (int)sp;
+    uc->uc_mcontext.mc_regs[31] = (int)fn;
+}
+int
+swapcontext(ucontext_t *oucp, const ucontext_t *ucp)
+{
+    if(getcontext(oucp) == 0)
+        setcontext(ucp);
+    return 0;
+}
+
+
 # if CORO_SJLJ
 #  include <stdio.h>
 #  include <signal.h>
