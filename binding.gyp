@@ -3,7 +3,7 @@
 		'default_configuration': 'Release',
 		'configurations': {
 			'Release': {
-				'cflags': [ '-O3' ],
+				'cflags': [ '-O3', '-fPIC' ],
 				'xcode_settings': {
 					'GCC_OPTIMIZATION_LEVEL': '3',
 					'GCC_GENERATE_DEBUGGING_SYMBOLS': 'NO',
